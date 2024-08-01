@@ -19,13 +19,13 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Restore dependencies
-        run: dotnet restore NutriPlan/NutriPlan.csproj
+        run: dotnet restore NutriPlan.csproj
 
       - name: Build with dotnet
-        run: dotnet build NutriPlan/NutriPlan.csproj --configuration Release
+        run: dotnet build NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan/NutriPlan.csproj -c Release -o ./myapp
+        run: dotnet publish NutriPlan.csproj -c Release -o ./myapp
 
       - name: List files in myapp
         run: dir ./myapp

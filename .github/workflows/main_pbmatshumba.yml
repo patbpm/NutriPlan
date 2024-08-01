@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
-          package: './NutriPlan/NutriPlan/myapp'  # Ensure this matches the output directory from publish
+          package: 'D:\a\NutriPlan\NutriPlan\myapp'  # Ensure this matches the output directory from publish

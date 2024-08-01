@@ -21,11 +21,14 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: Restore dependencies
+        run: dotnet restore NutriPlan/NutriPlan.csproj
+
       - name: Build with dotnet
-        run: dotnet build NutriPlan --configuration Release
+        run: dotnet build NutriPlan/NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish NutriPlan/NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -40,14 +43,14 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -61,5 +64,4 @@ jobs:
         with:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
-          package: .
-          
+          package: './myapp'  # Ensure this matches the output directory from publish

@@ -51,9 +51,6 @@ jobs:
         with:
           name: .net-app
 
-      - name: List contents of the downloaded artifact directory
-        run: dir ../myapp
-
       - name: Login to Azure
         uses: azure/login@v2
         with:

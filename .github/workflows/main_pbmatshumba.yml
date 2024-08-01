@@ -25,7 +25,7 @@ jobs:
         run: dotnet build NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}
+        run: dotnet publish NutriPlan.csproj -c Release -o ./myapp
 
       - name: List contents of the publish directory
         run: dir ./myapp
@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}
+          
 
   deploy:
     runs-on: windows-latest

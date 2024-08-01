@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./NutriPlan/myapp
+          path: ./myapp
 
   deploy:
     runs-on: windows-latest
@@ -67,4 +67,4 @@ jobs:
         with:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
-          package: './myapp'  # Ensure this matches the output directory from publish
+          package: './NutriPlan/myapp'  # Ensure this matches the output directory from publish

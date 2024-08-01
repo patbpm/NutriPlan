@@ -25,16 +25,13 @@ jobs:
         run: dotnet build NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan.csproj -c Release -o ./myapp
-
-      - name: List files in myapp
-        run: dir ./myapp
+        run: dotnet publish NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./myapp
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     runs-on: windows-latest
@@ -50,9 +47,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
-      - name: List files in downloaded artifact
-        run: dir ./myapp
 
       - name: Login to Azure
         uses: azure/login@v2

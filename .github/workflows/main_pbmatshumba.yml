@@ -22,13 +22,13 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Restore dependencies
-        run: dotnet restore NutriPlan/NutriPlan.csproj
+        run: dotnet restore NutriPlan.csproj
 
       - name: Build with dotnet
-        run: dotnet build NutriPlan/NutriPlan.csproj --configuration Release
+        run: dotnet build NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan/NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

@@ -25,7 +25,7 @@ jobs:
         run: dotnet build NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan.csproj -c Release -o ./myapp
+        run: dotnet publish NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}
 
       - name: List contents of the publish directory
         run: dir ./myapp
@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./myapp
+          path: ${{env.DOTNET_ROOT}}
 
   deploy:
     runs-on: windows-latest
@@ -64,4 +64,4 @@ jobs:
         with:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
-          package: 'D:\a\NutriPlan\NutriPlan\myapp'  # Ensure this matches the output directory from publish
+          package: .  # Ensure this matches the output directory from publish

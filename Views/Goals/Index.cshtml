@@ -1,0 +1,43 @@
+@model IEnumerable<NutriPlan.ViewModels.GoalViewModel>
+
+@{
+    ViewData["Title"] = "Goals";
+}
+
+<h1>Goals</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Goal</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Name)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Description)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().StartDate)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().EndDate)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().IsAchieved)</th>
+            <th>@Html.DisplayNameFor(model => model.FirstOrDefault().UserProfileName)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate.ToShortDateString()</td>
+                <td>@item.IsAchieved</td>
+                <td>@item.UserProfileName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

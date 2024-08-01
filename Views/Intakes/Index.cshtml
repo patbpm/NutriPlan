@@ -1,0 +1,45 @@
+@model IEnumerable<NutriPlan.Models.Intake>
+
+@{
+    ViewData["Title"] = "Intakes";
+}
+
+<h1>Intakes</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Intake</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Food Item</th>
+            <th>Calories</th>
+            <th>Protein</th>
+            <th>Carbohydrates</th>
+            <th>Fat</th>
+            <th>User Profile</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Date.ToShortDateString()</td>
+                <td>@item.FoodItem</td>
+                <td>@item.Calories</td>
+                <td>@item.Protein</td>
+                <td>@item.Carbohydrates</td>
+                <td>@item.Fat</td>
+                <td>@item.UserProfile?.FullName</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

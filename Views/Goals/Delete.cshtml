@@ -1,0 +1,25 @@
+@model NutriPlan.Models.Goal
+
+@{
+    ViewData["Title"] = "Delete Goal";
+}
+
+<h1>Delete Goal</h1>
+
+<h4>Goal</h4>
+<hr />
+<div>
+    <h5>@Model.Name</h5>
+    <p>
+        <strong>Description:</strong> @Model.Description<br />
+        <strong>Start Date:</strong> @Model.StartDate.ToShortDateString()<br />
+        <strong>End Date:</strong> @Model.EndDate.ToShortDateString()<br />
+        <strong>Is Achieved:</strong> @Model.IsAchieved<br />
+        <strong>User Profile:</strong> @Model.UserProfile.FullName<br />
+    </p>
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

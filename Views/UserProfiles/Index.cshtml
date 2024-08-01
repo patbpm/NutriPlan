@@ -1,0 +1,39 @@
+@model IEnumerable<NutriPlan.Models.UserProfile>
+
+@{
+    ViewData["Title"] = "User Profiles";
+}
+
+<h1>User Profiles</h1>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Profile</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var profile in Model)
+        {
+            <tr>
+                <td>@profile.Id</td>
+                <td>@profile.UserName</td>
+                <td>@profile.Email</td>
+                <td>@profile.FullName</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = profile.Id })" class="btn btn-info btn-sm">Details</a>
+                    <a href="@Url.Action("Edit", new { id = profile.Id })" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = profile.Id })" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

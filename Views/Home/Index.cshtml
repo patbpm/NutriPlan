@@ -1,8 +1,60 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Homepage";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    
+    <main role="main" class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to NutriPlan!</h1>
+            <p class="lead">Your ultimate nutritional planning and tracking tool.</p>
+            <hr class="my-4">
+            <p>Plan your meals, set your goals, and track your progress with ease.</p>
+            <a class="btn btn-primary btn-lg" href="@Url.Action("Index", "MealPlans")" role="button">Start Planning</a>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="~/images/pexels-polina-zimmerman-3782235.jpg" class="card-img-top" alt="Goals">
+                    <div class="card-body">
+                        <h5 class="card-title">Goals</h5>
+                        <p class="card-text">Set and track your nutritional goals efficiently.</p>
+                        <a href="@Url.Action("Index", "Goals")" class="btn btn-primary">View Goals</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="~/images/pexels-gustavo-fring-3874618.jpg" class="card-img-top" alt="Meal Plans">
+                    <div class="card-body">
+                        <h5 class="card-title">Meal Plans</h5>
+                        <p class="card-text">Create and manage your personalized meal plans.</p>
+                        <a href="@Url.Action("Index", "MealPlans")" class="btn btn-primary">View Meal Plans</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="~/images/pexels-ella-olsson-572949-1640774.jpg" class="card-img-top" alt="Meals">
+                    <div class="card-body">
+                        <h5 class="card-title">Meals</h5>
+                        <p class="card-text">Log and review your meals and their nutritional information.</p>
+                        <a href="@Url.Action("Index", "Meals")" class="btn btn-primary">View Meals</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

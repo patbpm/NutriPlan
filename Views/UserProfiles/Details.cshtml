@@ -1,0 +1,43 @@
+@model NutriPlan.Models.UserProfile
+
+@{
+    ViewData["Title"] = "User Profile Details";
+}
+
+<h1>User Profile Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">User Profile</h4>
+        <dl class="row">
+            <dt class="col-sm-3">ID</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">User Name</dt>
+            <dd class="col-sm-9">@Model.UserName</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FullName</dd>
+
+            <dt class="col-sm-3">Age</dt>
+            <dd class="col-sm-9">@Model.Age</dd>
+
+            <dt class="col-sm-3">Gender</dt>
+            <dd class="col-sm-9">@Model.Gender</dd>
+
+            <dt class="col-sm-3">Weight</dt>
+            <dd class="col-sm-9">@Model.Weight</dd>
+
+            <dt class="col-sm-3">Height</dt>
+            <dd class="col-sm-9">@Model.Height</dd>
+
+            <dt class="col-sm-3">Dietary Restrictions</dt>
+            <dd class="col-sm-9">@Model.DietaryRestrictions</dd>
+        </dl>
+        <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-warning">Edit</a>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

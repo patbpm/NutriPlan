@@ -27,6 +27,9 @@ jobs:
       - name: dotnet publish
         run: dotnet publish NutriPlan.csproj -c Release -o ./myapp
 
+      - name: List contents of the publish directory
+        run: dir ./myapp
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -47,6 +50,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+
+      - name: List contents of the downloaded artifact directory
+        run: dir ./myapp
 
       - name: Login to Azure
         uses: azure/login@v2

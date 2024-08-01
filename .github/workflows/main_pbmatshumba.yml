@@ -25,13 +25,15 @@ jobs:
         run: dotnet build NutriPlan.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish NutriPlan.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        env:
+          OUTPUT_DIR: ${{ github.workspace }}/myapp
+        run: dotnet publish NutriPlan.csproj -c Release -o $OUTPUT_DIR
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{ github.workspace }}/myapp
 
   deploy:
     runs-on: windows-latest
@@ -40,7 +42,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write # Required for JWT
 
     steps:
       - name: Download artifact from build job
@@ -61,4 +63,4 @@ jobs:
         with:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
-          package: './myapp'  # Ensure this matches the output directory from publish
+          package: './myapp'  # This should match the output directory from publish

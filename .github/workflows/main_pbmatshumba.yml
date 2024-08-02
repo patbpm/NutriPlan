@@ -41,7 +41,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -56,13 +56,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EA86BF8151744ACF94F29E5AAF1F9E65 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CED030F64E7540878BF5F3DF0AD6EFBB }}
 
-      - name: Run database migrations
-        run: |
-          dotnet tool install --global dotnet-ef
-          dotnet ef database update --project ./NutriPlan.csproj
-        env:
-          ConnectionStrings__DefaultConnection: ${{ secrets.DATABASE_CONNECTION_STRING }}
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -70,3 +63,11 @@ jobs:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
           package: .
+
+      - name: Run database migrations
+        run: dotnet ef database update --project NutriPlan.csproj --startup-project NutriPlan.csproj
+        env:
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          ASPNETCORE_ENVIRONMENT: Production
+          CONNECTIONSTRING: ${{ secrets.AZURE_DATABASE_CONNECTION_STRING }} # Ensure this secret is set
+

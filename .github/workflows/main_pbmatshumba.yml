@@ -59,7 +59,7 @@ jobs:
       - name: Run database migrations
         run: |
           dotnet tool install --global dotnet-ef
-          dotnet ef database update --project NutriPlan.csproj
+          dotnet ef database update --project ./NutriPlan.csproj
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.DATABASE_CONNECTION_STRING }}
 

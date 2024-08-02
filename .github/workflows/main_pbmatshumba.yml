@@ -41,7 +41,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -55,6 +55,13 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C9BEF40CD9664B5F9E77DBB8D944D939 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EA86BF8151744ACF94F29E5AAF1F9E65 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CED030F64E7540878BF5F3DF0AD6EFBB }}
+
+      - name: Run database migrations
+        run: |
+          dotnet tool install --global dotnet-ef
+          dotnet ef database update --project NutriPlan.csproj
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.DATABASE_CONNECTION_STRING }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp

@@ -14,6 +14,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <None Remove="obj\Debug\net8.0\scopedcss\bundle\NutriPlan.styles.css" />
   </ItemGroup>
 
 </Project>

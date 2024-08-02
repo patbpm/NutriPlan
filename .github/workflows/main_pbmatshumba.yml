@@ -76,7 +76,9 @@ jobs:
       - name: Run database migrations
         run: |
           $env:PATH += ";$env:USERPROFILE\.dotnet\tools"
-          dotnet ef database update
+          dotnet ef --version
+          dotnet ef migrations list --verbose
+          dotnet ef database update --verbose
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           ASPNETCORE_ENVIRONMENT: Production

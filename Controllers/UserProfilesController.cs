@@ -19,18 +19,18 @@ namespace NutriPlan.Controllers
         // GET: UserProfiles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserProfiles.ToListAsync());
+            return View(await _context.Users.ToListAsync());
         }
 
         // GET: UserProfiles/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var userProfile = await _context.UserProfiles
+            var userProfile = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userProfile == null)
             {
@@ -68,7 +68,7 @@ namespace NutriPlan.Controllers
                 return NotFound();
             }
 
-            var userProfile = await _context.UserProfiles.FindAsync(id);
+            var userProfile = await _context.Users.FindAsync(id);
             if (userProfile == null)
             {
                 return NotFound();
@@ -79,7 +79,7 @@ namespace NutriPlan.Controllers
         // POST: UserProfiles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,Email,PasswordHash,FullName,Age,Gender,Weight,Height,DietaryRestrictions")] UserProfile userProfile)
+        public async Task<IActionResult> Edit(string? id, [Bind("Id,UserName,Email,PasswordHash,FullName,Age,Gender,Weight,Height,DietaryRestrictions")] UserProfile userProfile)
         {
             if (id != userProfile.Id)
             {
@@ -110,14 +110,14 @@ namespace NutriPlan.Controllers
         }
 
         // GET: UserProfiles/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var userProfile = await _context.UserProfiles
+            var userProfile = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (userProfile == null)
             {
@@ -132,15 +132,15 @@ namespace NutriPlan.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userProfile = await _context.UserProfiles.FindAsync(id);
-            _context.UserProfiles.Remove(userProfile);
+            var userProfile = await _context.Users.FindAsync(id);
+            _context.Users.Remove(userProfile);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserProfileExists(int id)
+        private bool UserProfileExists(string? id)
         {
-            return _context.UserProfiles.Any(e => e.Id == id);
+            return _context.Users.Any(e => e.Id == id);
         }
     }
 }

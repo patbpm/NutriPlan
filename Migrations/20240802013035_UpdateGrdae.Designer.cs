@@ -12,8 +12,8 @@ using NutriPlan.Data;
 namespace NutriPlan.Migrations
 {
     [DbContext(typeof(NutriPlanContext))]
-    [Migration("20240801043412_AddNutriPlanModels")]
-    partial class AddNutriPlanModels
+    [Migration("20240802013035_UpdateGrdae")]
+    partial class UpdateGrdae
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,9 +53,12 @@ namespace NutriPlan.Migrations
                     b.Property<int>("UserProfileId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserProfileId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserProfileId");
+                    b.HasIndex("UserProfileId1");
 
                     b.ToTable("Goals");
                 });
@@ -90,9 +93,12 @@ namespace NutriPlan.Migrations
                     b.Property<int>("UserProfileId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserProfileId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserProfileId");
+                    b.HasIndex("UserProfileId1");
 
                     b.ToTable("Intakes");
                 });
@@ -126,7 +132,7 @@ namespace NutriPlan.Migrations
 
                     b.HasIndex("MealPlanId");
 
-                    b.ToTable("Meal");
+                    b.ToTable("Meals");
                 });
 
             modelBuilder.Entity("NutriPlan.Models.MealPlan", b =>
@@ -155,53 +161,81 @@ namespace NutriPlan.Migrations
                     b.Property<int>("UserProfileId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserProfileId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("UserProfileId");
+                    b.HasIndex("UserProfileId1");
 
                     b.ToTable("MealPlans");
                 });
 
             modelBuilder.Entity("NutriPlan.Models.UserProfile", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DietaryRestrictions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Height")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<double>("Weight")
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Weight")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -213,9 +247,7 @@ namespace NutriPlan.Migrations
                 {
                     b.HasOne("NutriPlan.Models.UserProfile", "UserProfile")
                         .WithMany("Goals")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserProfileId1");
 
                     b.Navigation("UserProfile");
                 });
@@ -224,9 +256,7 @@ namespace NutriPlan.Migrations
                 {
                     b.HasOne("NutriPlan.Models.UserProfile", "UserProfile")
                         .WithMany("Intakes")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserProfileId1");
 
                     b.Navigation("UserProfile");
                 });
@@ -246,9 +276,7 @@ namespace NutriPlan.Migrations
                 {
                     b.HasOne("NutriPlan.Models.UserProfile", "UserProfile")
                         .WithMany("MealPlans")
-                        .HasForeignKey("UserProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserProfileId1");
 
                     b.Navigation("UserProfile");
                 });

@@ -49,7 +49,7 @@ namespace NutriPlan.Controllers
         public IActionResult Create()
         {
             // Populate the UserProfile dropdown
-            ViewData["UserProfileId"] = new SelectList(_context.UserProfiles, "Id", "Name");
+            ViewData["UserProfileId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace NutriPlan.Controllers
             }
 
             // Repopulate the UserProfile dropdown if validation fails
-            ViewData["UserProfileId"] = new SelectList(_context.UserProfiles, "Id", "Name", intake.UserProfileId);
+            ViewData["UserProfileId"] = new SelectList(_context.Users, "Id", "Name", intake.UserProfileId);
             return View(intake);
         }
 
@@ -85,7 +85,7 @@ namespace NutriPlan.Controllers
             }
 
             // Populate the UserProfile dropdown
-            ViewData["UserProfileId"] = new SelectList(_context.UserProfiles, "Id", "Name", intake.UserProfileId);
+            ViewData["UserProfileId"] = new SelectList(_context.Users, "Id", "Name", intake.UserProfileId);
             return View(intake);
         }
 
@@ -121,7 +121,7 @@ namespace NutriPlan.Controllers
             }
 
             // Repopulate the UserProfile dropdown if validation fails
-            ViewData["UserProfileId"] = new SelectList(_context.UserProfiles, "Id", "Name", intake.UserProfileId);
+            ViewData["UserProfileId"] = new SelectList(_context.Users, "Id", "Name", intake.UserProfileId);
             return View(intake);
         }
 

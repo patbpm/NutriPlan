@@ -1,7 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using NutriPlan.Data;
+using NutriPlan.Models;
 using NutriPlan.Services;
 using NutriPlan.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,6 +20,19 @@ builder.Services.AddScoped<IGoalService, GoalService>();
 builder.Services.AddScoped<IIntakeService, IntakeService>();
 builder.Services.AddScoped<IMealPlanService, MealPlanService>();
 builder.Services.AddScoped<IMealService, MealService>();
+
+// Add Identity services
+builder.Services.AddIdentity<UserProfile, IdentityRole>()
+    .AddEntityFrameworkStores<NutriPlanContext>()
+    .AddDefaultTokenProviders();
+
+// Configure application cookie settings
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
 
 var app = builder.Build();
 
@@ -32,10 +49,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // Add this line to ensure authentication is used
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern:  "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

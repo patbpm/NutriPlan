@@ -163,7 +163,7 @@ namespace NutriPlan.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["UserProfileId"] = new SelectList(_context.UserProfiles, "Id", "Name", mealPlanViewModel.UserProfileId);
+            ViewData["UserProfileId"] = new SelectList(_context.Users, "Id", "Name", mealPlanViewModel.UserProfileId);
             return View(mealPlanViewModel);
         }
 

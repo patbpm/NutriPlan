@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NutriPlan.Data;
 
@@ -11,9 +12,11 @@ using NutriPlan.Data;
 namespace NutriPlan.Migrations
 {
     [DbContext(typeof(NutriPlanContext))]
-    partial class NutriPlanContextModelSnapshot : ModelSnapshot
+    [Migration("20240802021338_UpdateGrdae4")]
+    partial class UpdateGrdae4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

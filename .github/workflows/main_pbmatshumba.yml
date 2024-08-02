@@ -1,4 +1,4 @@
-name: Build, deploy, and migrate ASP.Net Core app to Azure Web App - pbmatshumba
+name: Build, Deploy, and Migrate ASP.NET Core app to Azure Web App - pbmatshumba
 
 on:
   push:
@@ -11,23 +11,42 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
+      - name: Display .NET information
+        run: |
+          dotnet --info
+          dotnet --version
+
+      - name: List directory contents
+        run: |
+          dir
+          dir /s *.csproj
+
       - name: Install dotnet-ef tool
         run: dotnet tool install --global dotnet-ef
 
+      - name: Restore NuGet packages
+        run: dotnet restore
+        
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release -v d
+
+      - name: Run tests
+        run: dotnet test --no-restore --verbosity normal
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        if: success()
+        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp" -v d
 
       - name: Upload artifact for deployment job
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
@@ -39,16 +58,16 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -63,7 +82,7 @@ jobs:
         with:
           app-name: 'pbmatshumba'
           slot-name: 'Production'
-          package: .
+          package: ${{env.DOTNET_ROOT}}/myapp
 
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
@@ -73,10 +92,15 @@ jobs:
       - name: Install dotnet-ef tool
         run: dotnet tool install --global dotnet-ef
 
+      - name: List directory contents
+        run: |
+          dir
+          dir /s *.csproj
+
       - name: Run database migrations
         run: |
           $env:PATH += ";$env:USERPROFILE\.dotnet\tools"
-          dotnet ef database update
+          dotnet ef database update --verbose
         env:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           ASPNETCORE_ENVIRONMENT: Production
